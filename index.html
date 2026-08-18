@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>漁生｜南方澳探索地圖 Voice Map</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&family=Noto+Serif+TC:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="nycu.css">
+</head>
+<body>
+
+    <div class="top-notice-bar">
+        <span class="notice-brand-title">漁生</span>
+        <div class="top-nav-links">
+            <a href="index.html" class="nav-item-link active">Home</a>
+            <a href="index2.html" class="nav-item-link">Story Map</a>
+            <a href="#about" class="nav-item-link">About Us</a>
+            <button class="top-burger-btn" id="openDrawerBtn" title="開啟目錄">☰</button>
+        </div>
+    </div>
+
+    <div class="scroll-center-hint" id="scrollCenterHint">
+        <div class="scroll-arrow-chevron"></div>
+        <div class="scroll-arrow-chevron"></div>
+    </div>
+
+    <div class="map-viewport" id="mapViewport">
+        <div class="map-canvas" id="mapCanvas">
+            
+            <div class="main-brand-hero">
+                <h1>漁生</h1>
+                <div class="sub-en">The Story Of NANFANG'AO</div>
+                <p>討海人的命，是海給的...<br>一代又一代從南方澳出海，<br>在風浪之間討生活，<br>也把一生留在這片海。</p>
+            </div>
+
+            <svg class="map-path-svg">
+                <path d="M 360 530 
+                         C 460 545, 510 555, 612 562 
+                         C 840 575, 1020 990, 1262 962 
+                         C 1480 930, 1620 750, 1862 782 
+                         C 2120 820, 2350 1370, 2612 1332 
+                         C 2820 1300, 3050 1380, 3250 1450" 
+                      fill="none" stroke="#77a5c8" stroke-width="4" stroke-dasharray="12 12" />
+            </svg>
+
+            <div class="spot-node" style="top: 450px; left: 500px;" data-id="0">
+                <div class="spot-avatar-frame-wrap">
+                    <div class="spot-radar-ring"></div>
+                    <div class="spot-avatar-frame">
+                        <img src="image/IMG_0699.jpg" alt="Chapter 0 港邊記憶">
+                    </div>
+                </div>
+                <div class="spot-connect-stem"></div>
+                <div class="spot-pill-btn">
+                    <div class="spot-icon-circle">⊕</div>
+                    <div class="spot-title">Chapter 0 港邊記憶</div>
+                </div>
+            </div>
+
+            <div class="spot-node" style="top: 850px; left: 1150px;" data-id="1">
+                <div class="spot-avatar-frame-wrap">
+                    <div class="spot-radar-ring"></div>
+                    <div class="spot-avatar-frame">
+                        <img src="image/IMG_1134.jpg" alt="Chapter 1 漁民篇">
+                    </div>
+                </div>
+                <div class="spot-connect-stem"></div>
+                <div class="spot-pill-btn">
+                    <div class="spot-icon-circle">⊕</div>
+                    <div class="spot-title">Chapter 1 漁民篇</div>
+                </div>
+            </div>
+
+            <div class="spot-node" style="top: 670px; left: 1750px;" data-id="2">
+                <div class="spot-avatar-frame-wrap">
+                    <div class="spot-radar-ring"></div>
+                    <div class="spot-avatar-frame">
+                        <img src="image/DSC00335.JPG" alt="Chapter 2 職人篇">
+                    </div>
+                </div>
+                <div class="spot-connect-stem"></div>
+                <div class="spot-pill-btn">
+                    <div class="spot-icon-circle">⊕</div>
+                    <div class="spot-title">Chapter 2 職人篇</div>
+                </div>
+            </div>
+
+            <div class="spot-node" style="top: 1220px; left: 2500px;" data-id="3">
+                <div class="spot-avatar-frame-wrap">
+                    <div class="spot-radar-ring"></div>
+                    <div class="spot-avatar-frame">
+                        <img src="image/IMG_1235拷貝.JPG" alt="Chapter 3 食物篇">
+                    </div>
+                </div>
+                <div class="spot-connect-stem"></div>
+                <div class="spot-pill-btn">
+                    <div class="spot-icon-circle">⊕</div>
+                    <div class="spot-title">Chapter 3 食物篇</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="detail-modal-overlay" id="detailModal">
+        <div class="detail-bottom-sheet">
+            <button class="sheet-close-btn" id="sheetCloseBtn">✕</button>
+
+            <div class="sheet-left-photo-slider" id="modalPhotoSlider">
+                <img src="" alt="輪播圖1" class="sheet-slide-img active" id="slideImg0">
+                <img src="" alt="輪播圖2" class="sheet-slide-img" id="slideImg1">
+                <img src="" alt="輪播圖3" class="sheet-slide-img" id="slideImg2">
+                <div class="slider-dots-box">
+                    <div class="slider-dot active" id="sliderDot0"></div>
+                    <div class="slider-dot" id="sliderDot1"></div>
+                    <div class="slider-dot" id="sliderDot2"></div>
+                </div>
+            </div>
+
+            <div class="sheet-right-content">
+                <div>
+                    <div class="sheet-tag" id="modalTag">CHAPTER 0</div>
+                    <h2 class="sheet-title" id="modalTitle">港邊記憶</h2>
+                    
+                    <div class="sheet-badge-row">
+                        <span class="sheet-badge" id="modalBadge">南方澳聚落誌</span>
+                        <span class="sheet-badge" id="modalSubCount">深入小節</span>
+                    </div>
+
+                    <p class="sheet-desc" id="modalDesc"></p>
+
+                    <div class="sheet-sub-title">Subchapters / 包含小節</div>
+                    <div class="sheet-sub-list" id="modalSubList">
+                        </div>
+                </div>
+
+                <a href="#" class="sheet-enter-chapter-btn" id="modalChapterLink">
+                    <span>進入完整篇章閱讀</span>
+                    <span>→</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="drawer-overlay" id="drawerOverlay">
+        <div class="content-drawer">
+            <button class="drawer-close" id="closeDrawerBtn">✕</button>
+            <div class="drawer-header">
+                <h2>全 篇 章 架 構</h2>
+                <p>CONTENT DIRECTORY</p>
+            </div>
+
+            <div class="drawer-list">
+                <div class="drawer-item">
+                    <a href="港邊記憶.html" class="drawer-item-title">
+                        <span>Chapter 0 · 港邊記憶</span>
+                        <span>→</span>
+                    </a>
+                    <div class="drawer-sub-links">
+                        <span class="drawer-sub-link">· 0-1 Introduction</span>
+                    </div>
+                </div>
+
+                <div class="drawer-item"> 
+                    <a href="漁民篇.html" class="drawer-item-title">
+                        <span>Chapter 1 · 漁民篇</span>
+                        <span>→</span>
+                    </a>
+                    <div class="drawer-sub-links">
+                        <span class="drawer-sub-link">· 1-1 遠洋漁業</span>
+                        <span class="drawer-sub-link">· 1-2 近海漁業</span>
+                        <span class="drawer-sub-link">· 1-3 外籍漁工</span>
+                    </div>
+                </div>
+
+                <div class="drawer-item">
+                    <a href="職人篇.html" class="drawer-item-title">
+                        <span>Chapter 2 · 職人篇</span>
+                        <span>→</span>
+                    </a>
+                    <div class="drawer-sub-links">
+                        <span class="drawer-sub-link">· 2-1 三鋼鐵工廠</span>
+                        <span class="drawer-sub-link">· 2-2 龍德造船廠</span>
+                        <span class="drawer-sub-link">· 2-3 全福造船廠</span>
+                    </div>
+                </div>
+
+                <div class="drawer-item">
+                    <a href="食物篇.html" class="drawer-item-title">
+                        <span>Chapter 3 · 食物篇</span>
+                        <span>→</span>
+                    </a>
+                    <div class="drawer-sub-links">
+                        <span class="drawer-sub-link">· 3-1 海派生活</span>
+                        <span class="drawer-sub-link">· 3-2 大鯖魚夢工廠</span>
+                        <span class="drawer-sub-link">· 3-3 魚市場</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer" id="siteFooter">
+        <div class="footer-left">
+            <h4>漁生 · 南方澳的故事</h4>
+            <p>© 2026 NANFANG'AO PROJECT. ALL RIGHTS RESERVED.</p>
+        </div>
+        
+        <div class="footer-right">
+            <div class="footer-social-links">
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="Instagram">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
+
+                <a href="mailto:contact@nanfangao.tw" class="footer-social-btn" title="聯絡信箱">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 3.771v-9.14l4.623 5.369zm3.456 2.071l-1.929 2.257h-6.15l6.079-4.965 2 2.708zm4.042 0l2-2.708 6.079 4.965h-6.15l-1.929-2.257zm3.456-2.071l4.423-5.369v9.14l-4.423-3.771zm-15.577-5.929h20v2.443l-10 7.557-10-7.557v-2.443z"/>
+                    </svg>
+                </a>
+            </div>
+
+            <button class="footer-back-top-btn" id="backToTopBtn">
+                <span>TOP</span>
+                <span>↑</span>
+            </button>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- 篇章資料庫（各篇章配置 3 張輪播圖） ---
+            const chapterData = [
+                { 
+                    tag: "CHAPTER 0", 
+                    badge: "南方澳聚落誌",
+                    title: "港邊記憶", 
+                    desc: "提到宜蘭，腦海中浮現的總是「好山好水」，而在這片被自然環抱的土地上，「海」幾乎成了宜蘭最鮮明、也最容易被忽略的代名詞。這裡是一個長年承載勞動、產業、家庭與記憶的生活現場。", 
+                    images: ["image/IMG_0699.jpg", "image/IMG_1222拷貝.JPG", "image/DSC00335.JPG"],
+                    mainLink: "港邊記憶.html",
+                    subSections: [
+                        { id: "0-1", title: "Introduction" }
+                    ]
+                },
+                { 
+                    tag: "CHAPTER 1", 
+                    badge: "討海人歲月",
+                    title: "漁民篇", 
+                    desc: "日夜與風浪博弈，討海人的生活刻劃在粗糙的手心。出海是生計的賭注，靠岸是家的期盼。這是一段與大海搏鬥、共生的生命歷程。", 
+                    images: ["image/IMG_1134.jpg", "image/IMG_1133.JPG", "image/IMG_0699.jpg"],
+                    mainLink: "漁民篇.html",
+                    subSections: [
+                        { id: "1-1", title: "遠洋漁業：跨越大洋的征途" },
+                        { id: "1-2", title: "近海漁業：沿岸浪潮的日常" },
+                        { id: "1-3", title: "外籍漁工：異鄉異客的港邊心事" }
+                    ]
+                },
+                { 
+                    tag: "CHAPTER 2", 
+                    badge: "港口幕後功臣",
+                    title: "職人篇", 
+                    desc: "修船師傅、造網匠人、製冰廠工人。在喧鬧的拍賣聲之外，是這群職人以精湛手藝支撐起整個港口的運轉與出航安全。", 
+                    images: ["image/DSC00335.JPG", "image/DSC01199.jpg", "image/IMG_1222拷貝.JPG"],
+                    mainLink: "職人篇.html",
+                    subSections: [
+                        { id: "2-1", title: "三鋼鐵工廠：凝固時光的維修記憶" },
+                        { id: "2-2", title: "龍德造船廠：現代工藝的造船巨匠" },
+                        { id: "2-3", title: "全福造船廠：傳統匠人的木石歲月" }
+                    ]
+                },
+                { 
+                    tag: "CHAPTER 3", 
+                    badge: "在地風味記憶",
+                    title: "食物篇", 
+                    desc: "剛捕撈上岸的鯖魚、傳統技法醃漬的魚乾、熱騰騰的魚丸湯。每一道料理，都封存了南方澳在地獨特的海風滋味與飲食文化。", 
+                    images: ["image/IMG_1235拷貝.JPG", "image/IMG_1385拷貝.JPG", "image/IMG_1134.jpg"],
+                    mainLink: "食物篇.html",
+                    subSections: [
+                        { id: "3-1", title: "海派生活：南方澳的日常吃食" },
+                        { id: "3-2", title: "大鯖魚夢工廠：海洋產業的現代轉身" },
+                        { id: "3-3", title: "魚市場：清晨拍賣的第一手鮮味" }
+                    ]
+                }
+            ];
+
+            // 1. 滾輪推進地圖與隱藏/顯示提示箭頭
+            const canvas = document.getElementById('mapCanvas');
+            const siteFooter = document.getElementById('siteFooter');
+            const backToTopBtn = document.getElementById('backToTopBtn');
+            const scrollCenterHint = document.getElementById('scrollCenterHint');
+
+            let currentX = 0;
+            let currentY = 0;
+            const canvasWidth = 3400;
+            const canvasHeight = 2000;
+
+            function updateDiagonalScroll() {
+                const minX = window.innerWidth - canvasWidth;
+                const minY = window.innerHeight - canvasHeight;
+
+                currentX = Math.min(0, Math.max(minX, currentX));
+                currentY = Math.min(0, Math.max(minY, currentY));
+
+                canvas.style.transform = `translate(${currentX}px, ${currentY}px)`;
+
+                // 當滑離起點或到達底部時隱藏向下滑動箭頭
+                if (currentY <= minY + 90 || currentX <= minX + 90) {
+                    siteFooter.classList.add('show');
+                    scrollCenterHint.classList.add('hide');
+                } else {
+                    siteFooter.classList.remove('show');
+                    scrollCenterHint.classList.remove('hide');
+                }
+            }
+
+            window.addEventListener('wheel', (e) => {
+                if (document.getElementById('detailModal').classList.contains('open') || 
+                    document.getElementById('drawerOverlay').classList.contains('open')) {
+                    return;
+                }
+
+                const scrollSpeed = 1.35;
+                const delta = (Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX) * scrollSpeed;
+
+                currentX -= delta;
+                currentY -= delta * 0.52;
+
+                updateDiagonalScroll();
+            }, { passive: true });
+
+            backToTopBtn.addEventListener('click', () => {
+                currentX = 0;
+                currentY = 0;
+                canvas.style.transition = 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+                updateDiagonalScroll();
+
+                setTimeout(() => {
+                    canvas.style.transition = 'transform 0.25s cubic-bezier(0.1, 0.9, 0.2, 1)';
+                }, 850);
+            });
+
+            // 2. 點擊 Spot 彈出大卡片與啟動自動 3 張照片輪播
+            const detailModal = document.getElementById('detailModal');
+            const sheetCloseBtn = document.getElementById('sheetCloseBtn');
+            const modalTag = document.getElementById('modalTag');
+            const modalBadge = document.getElementById('modalBadge');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDesc = document.getElementById('modalDesc');
+            const modalSubList = document.getElementById('modalSubList');
+            const modalSubCount = document.getElementById('modalSubCount');
+            const modalChapterLink = document.getElementById('modalChapterLink');
+
+            let autoSliderTimer = null;
+            let currentSlideIndex = 0;
+
+            function startAutoSlider(images) {
+                // 初始化圖片來源
+                for (let i = 0; i < 3; i++) {
+                    const imgEl = document.getElementById(`slideImg${i}`);
+                    const dotEl = document.getElementById(`sliderDot${i}`);
+                    imgEl.src = images[i] || images[0];
+                    imgEl.classList.toggle('active', i === 0);
+                    dotEl.classList.toggle('active', i === 0);
+                }
+
+                currentSlideIndex = 0;
+                if (autoSliderTimer) clearInterval(autoSliderTimer);
+
+                // 每 3.5 秒自動輪播到下一張
+                autoSliderTimer = setInterval(() => {
+                    const prevIndex = currentSlideIndex;
+                    currentSlideIndex = (currentSlideIndex + 1) % 3;
+
+                    document.getElementById(`slideImg${prevIndex}`).classList.remove('active');
+                    document.getElementById(`sliderDot${prevIndex}`).classList.remove('active');
+
+                    document.getElementById(`slideImg${currentSlideIndex}`).classList.add('active');
+                    document.getElementById(`sliderDot${currentSlideIndex}`).classList.add('active');
+                }, 3500);
+            }
+
+            function stopAutoSlider() {
+                if (autoSliderTimer) {
+                    clearInterval(autoSliderTimer);
+                    autoSliderTimer = null;
+                }
+            }
+
+            document.querySelectorAll('.spot-node').forEach(spot => {
+                spot.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const id = parseInt(spot.getAttribute('data-id'));
+                    const data = chapterData[id];
+
+                    modalTag.innerText = data.tag;
+                    modalBadge.innerText = data.badge;
+                    modalTitle.innerText = data.title;
+                    modalDesc.innerText = data.desc;
+                    modalSubCount.innerText = `${data.subSections.length} 個深入小節`;
+                    modalChapterLink.href = data.mainLink;
+
+                    // 渲染純文字展示小節清單
+                    modalSubList.innerHTML = '';
+                    data.subSections.forEach(sub => {
+                        const div = document.createElement('div');
+                        div.className = 'sheet-sub-card-static';
+                        div.innerHTML = `
+                            <span class="sub-card-id">${sub.id}</span>
+                            <span class="sub-card-name">${sub.title}</span>
+                        `;
+                        modalSubList.appendChild(div);
+                    });
+
+                    // 啟動 3 張自動輪播
+                    startAutoSlider(data.images);
+
+                    detailModal.classList.add('open');
+                });
+            });
+
+            function closeModal() {
+                detailModal.classList.remove('open');
+                stopAutoSlider();
+            }
+
+            sheetCloseBtn.addEventListener('click', closeModal);
+            detailModal.addEventListener('click', (e) => {
+                if (e.target === detailModal) closeModal();
+            });
+
+            // 3. 右上角漢堡鈕與抽屜開關
+            const openDrawerBtn = document.getElementById('openDrawerBtn');
+            const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+            const drawerOverlay = document.getElementById('drawerOverlay');
+
+            openDrawerBtn.addEventListener('click', () => drawerOverlay.classList.add('open'));
+            closeDrawerBtn.addEventListener('click', () => drawerOverlay.classList.remove('open'));
+            drawerOverlay.addEventListener('click', (e) => {
+                if (e.target === drawerOverlay) drawerOverlay.classList.remove('open');
+            });
+        });
+    </script>
+</body>
+</html>
