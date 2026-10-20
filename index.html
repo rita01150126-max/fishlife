@@ -1507,37 +1507,53 @@ document.addEventListener("DOMContentLoaded", () => {
     const splashScreen = document.getElementById('splashScreen');
     const splashVideo = document.getElementById('splashVideo');
     const skipSplashBtn = document.getElementById('skipSplashBtn');
+    const splashBar = document.getElementById('splashBar');
 
     if (!splashScreen) return;
 
-    // 關閉開場動畫的函式
-    function closeSplash() {
-        splashScreen.classList.add('fade-out');
-        // 0.8 秒淡出動畫結束後，徹底從 DOM 移除，完全不佔資源
-        setTimeout(() => {
-            splashScreen.style.display = 'none';
-        }, 800);
+    // ✨ 核心重點：檢查這次瀏覽是否已經看過開場動畫
+    if (sessionStorage.getItem('hasSeenSplash')) {
+        // 如果已經看過，直接隱藏開場動畫，不播放
+        splashScreen.style.display = 'none';
+        return; 
     }
 
-    // 1. 影片播完 (ended) 時，自動淡出揭開首頁
+    // 關閉並記錄狀態的函式
+    function closeSplash() {
+        if (splashScreen.classList.contains('fade-out')) return;
+        
+        // 標記「已經看過開場」，下次點回 Home 就不會再跳出
+        sessionStorage.setItem('hasSeenSplash', 'true');
+        
+        splashScreen.classList.add('fade-out');
+        setTimeout(() => {
+            splashScreen.style.display = 'none';
+        }, 850);
+    }
+
+    // 1. 監聽影片進度與播放結束
     if (splashVideo) {
+        splashVideo.addEventListener('timeupdate', () => {
+            if (splashVideo.duration && splashBar) {
+                const percent = (splashVideo.currentTime / splashVideo.duration) * 100;
+                splashBar.style.width = percent + '%';
+            }
+        });
+
+        // 影片播放完畢時淡出並記錄
         splashVideo.addEventListener('ended', closeSplash);
 
-        // 防呆保護：若影片因網路延遲等原因超過 4.5 秒未播完，強制淡出進入首頁
-        setTimeout(() => {
-            if (!splashScreen.classList.contains('fade-out')) {
-                closeSplash();
-            }
-        }, 4500);
+        // 超時安全保護：最長不超過 5 秒自動進首頁
+        setTimeout(closeSplash, 5000);
 
-        // 確保在各瀏覽器順利自動撥放
+        // 嘗試自動播放
         splashVideo.play().catch(() => {
-            // 若遇到少數瀏覽器安全性阻擋自動播放，2秒後直接淡出進入
-            setTimeout(closeSplash, 1500);
+            // 若被瀏覽器省電或安全原則阻擋自動播放，1.8秒後直接淡出進首頁
+            setTimeout(closeSplash, 1800);
         });
     }
 
-    // 2. 點擊跳過按鈕
+    // 2. 點擊右上角跳過按鈕
     if (skipSplashBtn) {
         skipSplashBtn.addEventListener('click', closeSplash);
     }
