@@ -35,189 +35,183 @@
             user-select: none;
             overflow: hidden;
         }
-       /* ===================================================
-   🎬 圓形質感開場動畫 Splash Screen
-   =================================================== */
-.splash-screen {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    /* 取自影片底部的青瓷淡藍，純淨沉穩 */
-    background: radial-gradient(circle at center, #eef4f7 0%, #dbe7eb 100%);
-    z-index: 99999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.85s;
-    overflow: hidden;
-}
 
-.splash-screen.fade-out {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-}
+        /* 鎖死彈窗背後頁面的滑動 */
+        body.modal-open {
+            overflow: hidden !important;
+            touch-action: none !important;
+        }
 
-.splash-center-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 28px;
-    z-index: 2;
-}
-
-/* 圓形外框與光圈定位 */
-.splash-circle-wrapper {
-    position: relative;
-    width: 320px;
-    height: 320px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* ✨ 核心：裁切為純圓形且帶有精緻金色細邊框與柔和陰影 */
-.splash-video-circle {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    overflow: hidden;
-    position: relative;
-    border: 2px solid rgba(245, 179, 73, 0.55); /* 金色微光外框 */
-    box-shadow: 0 16px 45px rgba(19, 59, 92, 0.16), 0 0 0 6px rgba(255, 255, 255, 0.45);
-    background-color: #dbe7eb;
-}
-
-.splash-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* 確保影片在圓形內滿版不變形 */
-    display: block;
-}
-
-/* 🌟 周圍擴散的金色漣漪波紋（象徵海洋回聲） */
-.splash-ripple-ring {
-    position: absolute;
-    border-radius: 50%;
-    border: 1px dashed rgba(245, 179, 73, 0.45);
-    pointer-events: none;
-    animation: rippleExpand 3.2s infinite cubic-bezier(0.2, 0.8, 0.4, 1);
-}
-
-.ring-1 {
-    width: 320px; height: 320px;
-}
-.ring-2 {
-    width: 320px; height: 320px;
-    animation-delay: 1.6s;
-}
-
-@keyframes rippleExpand {
-    0% {
-        transform: scale(1);
-        opacity: 0.8;
-    }
-    100% {
-        transform: scale(1.48);
-        opacity: 0;
-    }
-}
-
-/* 下方字體排版 */
-.splash-text-group {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.splash-title {
-    font-family: 'Shippori Mincho', "Noto Serif TC", serif;
-    font-size: 1.35rem;
-    font-weight: 800;
-    color: var(--ocean-deep, #133b5c);
-    letter-spacing: 0.18em;
-    margin-bottom: 5px;
-}
-
-.splash-sub {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: var(--text-muted, #537591);
-    letter-spacing: 0.28em;
-    margin-bottom: 18px;
-}
-
-/* 極簡載入進度條 */
-.splash-progress-track {
-    width: 160px;
-    height: 2px;
-    background: rgba(19, 59, 92, 0.12);
-    border-radius: 2px;
-    overflow: hidden;
-}
-
-.splash-progress-bar {
-    width: 0%;
-    height: 100%;
-    background: linear-gradient(90deg, var(--ocean-blue, #1d5687), var(--accent-gold, #f5b349));
-    border-radius: 2px;
-    transition: width 0.1s linear;
-}
-
-/* 跳過按鈕 */
-.splash-skip-btn {
-    position: absolute;
-    top: 32px;
-    right: 36px;
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(19, 59, 92, 0.18);
-    color: var(--ocean-deep, #133b5c);
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1.8px;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    z-index: 5;
-}
-
-.splash-skip-btn:hover {
-    background: var(--ocean-deep, #133b5c);
-    color: #ffffff;
-    border-color: var(--ocean-deep, #133b5c);
-}
-
-/* 手機版自適應微調 */
-@media (max-width: 768px) {
-    .splash-circle-wrapper {
-        width: 250px;
-        height: 250px;
-    }
-    .ring-1, .ring-2 {
-        width: 250px;
-        height: 250px;
-    }
-    .splash-title {
-        font-size: 1.15rem;
-    }
-    .splash-sub {
-        font-size: 0.65rem;
-    }
-    .splash-skip-btn {
-        top: 20px;
-        right: 20px;
-        font-size: 10px;
-    }
-}
         /* ===================================================
-           🌊 1. 頂部導覽列 (圖片 Logo + 質感微型漢堡鍵)
+           🎬 圓形質感開場動畫 Splash Screen
+           =================================================== */
+        .splash-screen {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: radial-gradient(circle at center, #eef4f7 0%, #dbe7eb 100%);
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.85s;
+            overflow: hidden;
+        }
+
+        .splash-screen.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .splash-center-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 28px;
+            z-index: 2;
+        }
+
+        .splash-circle-wrapper {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .splash-video-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid rgba(245, 179, 73, 0.55);
+            box-shadow: 0 16px 45px rgba(19, 59, 92, 0.16), 0 0 0 6px rgba(255, 255, 255, 0.45);
+            background-color: #dbe7eb;
+        }
+
+        .splash-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .splash-ripple-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px dashed rgba(245, 179, 73, 0.45);
+            pointer-events: none;
+            animation: rippleExpand 3.2s infinite cubic-bezier(0.2, 0.8, 0.4, 1);
+        }
+
+        .ring-1 {
+            width: 320px; height: 320px;
+        }
+        .ring-2 {
+            width: 320px; height: 320px;
+            animation-delay: 1.6s;
+        }
+
+        @keyframes rippleExpand {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.48); opacity: 0; }
+        }
+
+        .splash-text-group {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .splash-title {
+            font-family: "Noto Serif TC", serif;
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--ocean-deep);
+            letter-spacing: 0.18em;
+            margin-bottom: 5px;
+        }
+
+        .splash-sub {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.28em;
+            margin-bottom: 18px;
+        }
+
+        .splash-progress-track {
+            width: 160px;
+            height: 2px;
+            background: rgba(19, 59, 92, 0.12);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .splash-progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--ocean-blue), var(--accent-gold));
+            border-radius: 2px;
+            transition: width 0.1s linear;
+        }
+
+        .splash-skip-btn {
+            position: absolute;
+            top: 32px;
+            right: 36px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(19, 59, 92, 0.18);
+            color: var(--ocean-deep);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.8px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            z-index: 5;
+        }
+
+        .splash-skip-btn:hover {
+            background: var(--ocean-deep);
+            color: #ffffff;
+            border-color: var(--ocean-deep);
+        }
+
+        @media (max-width: 768px) {
+            .splash-circle-wrapper {
+                width: 250px;
+                height: 250px;
+            }
+            .ring-1, .ring-2 {
+                width: 250px;
+                height: 250px;
+            }
+            .splash-title {
+                font-size: 1.15rem;
+            }
+            .splash-sub {
+                font-size: 0.65rem;
+            }
+            .splash-skip-btn {
+                top: 20px;
+                right: 20px;
+                font-size: 10px;
+            }
+        }
+
+        /* ===================================================
+           🌊 1. 頂部導覽列
            =================================================== */
         .top-notice-bar {
             padding-left: 0 !important;
@@ -247,7 +241,6 @@
             height: 100px;
             width: auto;
             max-width: 160px;
-           
             object-fit: contain;
             display: block;
             transition: opacity 0.3s ease;
@@ -281,7 +274,6 @@
             background-color: rgba(19, 59, 92, 0.06);
         }
 
-        /* 雙線微型極簡漢堡鍵 */
         .top-burger-btn {
             width: 44px;
             height: 44px;
@@ -306,25 +298,25 @@
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .top-burger-btn:hover {
-            background: #ffffff;
-            border-color: var(--ocean-blue);
-            transform: scale(1.05);
-            box-shadow: 0 6px 18px rgba(19, 59, 92, 0.12);
-        }
-
-        .top-burger-btn:hover .burger-line:first-child {
-            width: 14px;
-            transform: translateX(2px);
-        }
-
-        .top-burger-btn:hover .burger-line:last-child {
-            width: 20px;
-            transform: translateX(-1px);
+        @media (hover: hover) {
+            .top-burger-btn:hover {
+                background: #ffffff;
+                border-color: var(--ocean-blue);
+                transform: scale(1.05);
+                box-shadow: 0 6px 18px rgba(19, 59, 92, 0.12);
+            }
+            .top-burger-btn:hover .burger-line:first-child {
+                width: 14px;
+                transform: translateX(2px);
+            }
+            .top-burger-btn:hover .burger-line:last-child {
+                width: 20px;
+                transform: translateX(-1px);
+            }
         }
 
         /* ===================================================
-           🗺️ 2. 大地圖畫布 (> 768px)
+           🗺️ 2. 大地圖畫布
            =================================================== */
         .map-viewport {
             width: 100vw;
@@ -577,6 +569,7 @@
             position: relative;
             transform: translateY(100%);
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            overscroll-behavior: contain;
         }
 
         .detail-modal-overlay.open .detail-bottom-sheet {
@@ -600,12 +593,19 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
+        /* ✨ 照片輪播區 */
         .sheet-left-photo-slider {
             flex: 0 0 48%;
             height: 100%;
             position: relative;
             background-color: #0b1d2d;
             overflow: hidden;
+            cursor: grab;
+            touch-action: pan-y;
+        }
+
+        .sheet-left-photo-slider:active {
+            cursor: grabbing;
         }
 
         .sheet-slide-img {
@@ -614,12 +614,78 @@
             width: 100%; height: 100%;
             object-fit: cover;
             opacity: 0;
-            transition: opacity 0.8s ease-in-out;
+            transition: opacity 0.45s ease-in-out, transform 0.45s ease-out;
+            pointer-events: none;
         }
 
-        .sheet-slide-img.active { opacity: 1; }
+        .sheet-slide-img.active {
+            opacity: 1;
+            transform: scale(1);
+        }
 
-        /* 輪播點點（支援手動點選切換） */
+        /* ✨ 電腦版相片左右切換按鈕 (Nav Arrows) */
+        .slider-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(19, 59, 92, 0.65);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 15;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+        }
+
+        .slider-nav-btn.prev {
+            left: 20px;
+        }
+
+        .slider-nav-btn.next {
+            right: 20px;
+        }
+
+        .slider-nav-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: #ffffff;
+            stroke-width: 2.5;
+            fill: none;
+            transition: transform 0.2s ease, stroke 0.2s ease;
+        }
+
+        @media (hover: hover) {
+            .slider-nav-btn:hover {
+                background: rgba(19, 59, 92, 0.95);
+                border-color: var(--accent-gold);
+                transform: translateY(-50%) scale(1.1);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+            }
+            .slider-nav-btn.prev:hover svg {
+                transform: translateX(-2px);
+                stroke: var(--accent-gold);
+            }
+            .slider-nav-btn.next:hover svg {
+                transform: translateX(2px);
+                stroke: var(--accent-gold);
+            }
+        }
+
+        /* 手機與平板端（≤ 1024px）隱藏實體箭頭，以手勢滑動為主 */
+        @media (max-width: 1024px) {
+            .slider-nav-btn {
+                display: none !important;
+            }
+        }
+
         .slider-dots-box {
             position: absolute;
             bottom: 25px;
@@ -707,18 +773,26 @@
             color: var(--ocean-deep);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
         }
 
+        /* 防止 1-1、1-2 換行變直的 */
         .sub-card-id {
-            font-size: 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
             font-weight: 800;
             color: var(--ocean-blue);
+            white-space: nowrap !important;
+            flex-shrink: 0 !important;
+            display: inline-block;
+            letter-spacing: 0.5px;
+            min-width: 32px;
         }
 
         .sub-card-name {
             font-size: 14px;
             font-weight: 700;
+            line-height: 1.5;
         }
 
         .sheet-enter-chapter-btn {
@@ -743,211 +817,205 @@
         }
 
         /* ===================================================
-   📋 側邊抽屜目錄 (漁民篇質感：深海藍漸層 + 前綴斜線 ／)
-   =================================================== */
-.drawer-overlay {
-    position: fixed;
-    top: 0; right: 0px;
-    width: 100%; height: 100%;
-    background: rgba(6, 17, 30, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    z-index: 600;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s ease;
-}
+           📋 側邊抽屜目錄
+           =================================================== */
+        .drawer-overlay {
+            position: fixed;
+            top: 0; right: 0;
+            width: 100%; height: 100%;
+            background: rgba(6, 17, 30, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 600;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
 
-.drawer-overlay.open {
-    opacity: 1;
-    pointer-events: auto;
-}
+        .drawer-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-/* 抽屜主體：採用深海藍漸層，寬度設定適中 */
-.content-drawer {
-    position: absolute;
-    top: 0; right: 0;
-    width: 450px;
-    max-width: 82vw;
-    height: 100%;
-    background: linear-gradient(170deg, #091c2e 0%, #0d2842 50%, #133b5c 100%);
-    color: #ffffff;
-    padding: 24px 22px 35px;
-    transform: translateX(100%);
-    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    box-shadow: -10px 0 35px rgba(0, 0, 0, 0.45);
-}
+        .content-drawer {
+            position: absolute;
+            top: 0; right: 0;
+            width: 320px;
+            max-width: 82vw;
+            height: 100%;
+            background: linear-gradient(170deg, #091c2e 0%, #0d2842 50%, #133b5c 100%);
+            color: #ffffff;
+            padding: 24px 22px 35px;
+            transform: translateX(100%);
+            transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            box-shadow: -10px 0 35px rgba(0, 0, 0, 0.45);
+        }
 
-.drawer-overlay.open .content-drawer { 
-    transform: translateX(0); 
-}
+        .drawer-overlay.open .content-drawer { 
+            transform: translateX(0); 
+        }
 
-/* 關閉按鈕 (右上角俐落小按鈕) */
-.drawer-close {
-    align-self: flex-end;
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    color: #ffffff;
-    width: 30px;
-    height: 30px;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.25s ease;
-}
+        .drawer-close {
+            align-self: flex-end;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
 
-@media (hover: hover) {
-    .drawer-close:hover {
-        border-color: #ffffff;
-        background: rgba(255, 255, 255, 0.1);
-        transform: rotate(90deg);
-    }
-}
+        @media (hover: hover) {
+            .drawer-close:hover {
+                border-color: #ffffff;
+                background: rgba(255, 255, 255, 0.1);
+                transform: rotate(90deg);
+            }
+        }
 
-.drawer-menu-container {
-    padding-left: 10px;
-    margin-top: 15px;
-    display: flex;
-    flex-direction: column;
-}
+        .drawer-menu-container {
+            padding-left: 6px;
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+        }
 
-/* ✨ 電腦版（> 1024px）隱藏頂部快捷項目，只顯示目錄 */
-.drawer-main-pages {
-    display: none;
-    flex-direction: column;
-    gap: 16px;
-    padding: 10px 0 16px 0;
-}
+        .drawer-main-pages {
+            display: none;
+            flex-direction: column;
+            gap: 16px;
+            padding: 10px 0 16px 0;
+        }
 
-/* 漁民篇同款：斜線前綴選單連結 */
-.drawer-menu-link {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    text-decoration: none;
-    color: rgba(255, 255, 255, 0.9);
-    transition: transform 0.25s ease, color 0.25s ease;
-}
+        .drawer-menu-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.9);
+            transition: transform 0.25s ease, color 0.25s ease;
+        }
 
-.drawer-menu-link .slash {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.4);
-    transition: color 0.25s ease, transform 0.25s ease;
-}
+        .drawer-menu-link .slash {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.4);
+            transition: color 0.25s ease, transform 0.25s ease;
+        }
 
-.drawer-menu-link .link-text {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-}
+        .drawer-menu-link .link-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
 
-@media (hover: hover) {
-    .drawer-menu-link:hover {
-        transform: translateX(5px);
-        color: #ffffff;
-    }
-    .drawer-menu-link:hover .slash {
-        color: var(--accent-gold);
-        transform: scale(1.15);
-    }
-}
+        @media (hover: hover) {
+            .drawer-menu-link:hover {
+                transform: translateX(5px);
+                color: #ffffff;
+            }
+            .drawer-menu-link:hover .slash {
+                color: var(--accent-gold);
+                transform: scale(1.15);
+            }
+        }
 
-.drawer-menu-link.active .link-text {
-    color: #ffffff;
-    font-weight: 800;
-}
-.drawer-menu-link.active .slash {
-    color: var(--accent-gold);
-}
+        .drawer-menu-link.active .link-text {
+            color: #ffffff;
+            font-weight: 800;
+        }
+        .drawer-menu-link.active .slash {
+            color: var(--accent-gold);
+        }
 
-/* 分隔線 */
-.drawer-divider {
-    display: none;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.05) 100%);
-    margin: 8px 0 18px 0;
-}
+        .drawer-divider {
+            display: none;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.05) 100%);
+            margin: 8px 0 18px 0;
+        }
 
-/* 篇章目錄標題 */
-.drawer-header {
-    margin: 10px 0 18px;
-}
-.drawer-header h2 {
-    font-size: 25px;
-    font-weight: 800;
-    letter-spacing: 3px;
-    color: #ffffff;
-}
-.drawer-header p {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
-    opacity: 0.55;
-    letter-spacing: 2px;
-    margin-top: 2px;
-}
+        .drawer-header {
+            margin: 10px 0 18px;
+        }
+        .drawer-header h2 {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: #ffffff;
+        }
+        .drawer-header p {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            opacity: 0.55;
+            letter-spacing: 2px;
+            margin-top: 2px;
+        }
 
-/* 篇章清單 */
-.drawer-chapters-group {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
+        .drawer-chapters-group {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
 
-.drawer-chapter-block {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding-bottom: 12px;
-}
+        .drawer-chapter-block {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 12px;
+        }
 
-.drawer-chapter-title {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    font-size: 13.5px;
-    font-weight: 700;
-    color: #ffffff;
-    text-decoration: none;
-    transition: color 0.2s;
-}
+        .drawer-chapter-title {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
 
-.drawer-chapter-title .slash {
-    font-family: 'Montserrat', sans-serif;
-    color: rgba(255, 255, 255, 0.45);
-    font-weight: 300;
-}
+        .drawer-chapter-title .slash {
+            font-family: 'Montserrat', sans-serif;
+            color: rgba(255, 255, 255, 0.45);
+            font-weight: 300;
+        }
 
-.drawer-chapter-title:hover {
-    color: #8ec3eb;
-}
-.drawer-chapter-title:hover .slash {
-    color: var(--accent-gold);
-}
+        .drawer-chapter-title:hover {
+            color: #8ec3eb;
+        }
+        .drawer-chapter-title:hover .slash {
+            color: var(--accent-gold);
+        }
 
-.drawer-sub-items {
-    padding-left: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
+        .drawer-sub-items {
+            padding-left: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
 
-.drawer-sub-items .sub-item {
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.65);
-    line-height: 1.5;
-}
+        .drawer-sub-items .sub-item {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.65);
+            line-height: 1.5;
+        }
+
         /* ===================================================
            ⚓ 5. 頁尾 Footer
            =================================================== */
@@ -994,7 +1062,6 @@
         .footer-back-top-btn:hover {
             background: #ffffff;
             color: var(--ocean-deep);
-            border-color: #ffffff;
         }
 
         .footer-right { justify-self: end; }
@@ -1016,16 +1083,16 @@
 
         /* ===================================================
            💻 平板與手機大卡片設定 (≤ 1024px)：
-           照片固定長度 4:3 比例展示 + 垂直排列
            =================================================== */
         @media (max-width: 1024px) {
             .detail-bottom-sheet {
                 height: 90vh;
                 flex-direction: column;
                 overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior-y: contain;
             }
 
-            /* ✨ 關鍵修改：照片設為 4:3 比例自適應大小 */
             .sheet-left-photo-slider {
                 flex: none;
                 width: 100%;
@@ -1041,16 +1108,18 @@
                 height: 38px;
                 font-size: 18px;
             }
-.drawer-main-pages {
-        display: flex !important; /* 手機/平板端顯示 HOME、STORY MAP、ABOUT US */
-    }
-    .drawer-divider {
-        display: block !important; /* 顯示隔線，分開頂部與下方目錄 */
-    }
-    .content-drawer {
-        width: 290px;
-        padding: 24px 20px 35px;
-    }
+
+            .drawer-main-pages {
+                display: flex !important;
+            }
+            .drawer-divider {
+                display: block !important;
+            }
+            .content-drawer {
+                width: 290px;
+                padding: 24px 20px 35px;
+            }
+
             .sheet-right-content {
                 padding: 28px 24px 35px;
                 flex: none;
@@ -1076,7 +1145,6 @@
 
         /* ===================================================
            📱 6. 手機版專屬樣式 (≤ 768px)：
-           無模糊純垂直滑動
            =================================================== */
         @media (max-width: 768px) {
             html, body {
@@ -1213,38 +1281,33 @@
 </head>
 <body>
     <!-- 🎬 開場 Logo 動畫遮罩層 -->
-<!-- 🎬 圓形質感開場動畫遮罩層 -->
-<div id="splashScreen" class="splash-screen">
-    <div class="splash-center-content">
-        <!-- 圓形影片展示盒（外圍環繞金色等深線微光波紋） -->
-        <div class="splash-circle-wrapper">
-            <!-- 動態擴散光圈裝飾 -->
-            <div class="splash-ripple-ring ring-1"></div>
-            <div class="splash-ripple-ring ring-2"></div>
+    <div id="splashScreen" class="splash-screen">
+        <div class="splash-center-content">
+            <div class="splash-circle-wrapper">
+                <div class="splash-ripple-ring ring-1"></div>
+                <div class="splash-ripple-ring ring-2"></div>
 
-            <div class="splash-video-circle">
-                <video id="splashVideo" class="splash-video" playsinline muted autoplay>
-                    <source src="image/片頭.mp4" type="video/mp4">
-                    您的瀏覽器不支援影片播放。
-                </video>
+                <div class="splash-video-circle">
+                    <video id="splashVideo" class="splash-video" playsinline muted autoplay>
+                        <source src="image/片頭.mp4" type="video/mp4">
+                        您的瀏覽器不支援影片播放。
+                    </video>
+                </div>
+            </div>
+
+            <div class="splash-text-group">
+                <h2 class="splash-title">漁生 · 南方澳的故事</h2>
+                <p class="splash-sub">The MEMORIES Of NANFANG'AO</p>
+                <div class="splash-progress-track">
+                    <div class="splash-progress-bar" id="splashBar"></div>
+                </div>
             </div>
         </div>
 
-        <!-- 下方人文文字與極細進度條 -->
-        <div class="splash-text-group">
-            <h2 class="splash-title">漁生 · 南方澳的故事</h2>
-            <p class="splash-sub">The  MEMORIES Of NANFANG'AO</p>
-            <div class="splash-progress-track">
-                <div class="splash-progress-bar" id="splashBar"></div>
-            </div>
-        </div>
+        <button id="skipSplashBtn" class="splash-skip-btn">SKIP ✕</button>
     </div>
 
-    <!-- 右上角跳過按鈕 -->
-    <button id="skipSplashBtn" class="splash-skip-btn">SKIP ✕</button>
-</div>
-
-    <!-- 頂部導覽列 (圖片 Logo + 極簡質感漢堡鍵) -->
+    <!-- 頂部導覽列 -->
     <div class="top-notice-bar">
         <a href="index.html" class="notice-brand-logo">
             <img src="image/Logo.png" alt="漁生" class="brand-logo-img">
@@ -1278,7 +1341,6 @@
                 <p>南方澳，<br>一座因海而生的港口聚落。<br>潮起潮落之間，<br>寫下人與海共生的故事。</p>
             </div>
 
-            <!-- 虛線路徑 (手機版隱藏) -->
             <svg class="map-path-svg">
                 <path d="M 360 530 
                          C 460 545, 510 555, 612 562 
@@ -1354,13 +1416,20 @@
         <div class="detail-bottom-sheet">
             <button class="sheet-close-btn" id="sheetCloseBtn" aria-label="關閉">✕</button>
 
-            <!-- 輪播相片 -->
+            <!-- 輪播相片區：含左右按鈕、小圓點、觸控與拖曳切換 -->
             <div class="sheet-left-photo-slider" id="modalPhotoSlider">
                 <img src="" alt="Slide 1" class="sheet-slide-img active" id="slideImg0">
                 <img src="" alt="Slide 2" class="sheet-slide-img" id="slideImg1">
                 <img src="" alt="Slide 3" class="sheet-slide-img" id="slideImg2">
                 
-                <!-- 輪播指示點（點選可切換頁面） -->
+                <!-- ✨ 電腦版左右切換箭頭按鈕 -->
+                <button class="slider-nav-btn prev" id="sliderPrevBtn" aria-label="上一張照片">
+                    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <button class="slider-nav-btn next" id="sliderNextBtn" aria-label="下一張照片">
+                    <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+
                 <div class="slider-dots-box">
                     <div class="slider-dot active" data-index="0" id="sliderDot0" title="第 1 張"></div>
                     <div class="slider-dot" data-index="1" id="sliderDot1" title="第 2 張"></div>
@@ -1389,89 +1458,81 @@
         </div>
     </div>
 
-  <!-- 📋 側邊抽屜目錄 (漁民篇同款前綴斜線風格 + 保留目錄) -->
-<div class="drawer-overlay" id="drawerOverlay">
-    <div class="content-drawer">
-        <!-- 俐落關閉按鈕 -->
-        <button class="drawer-close" id="closeDrawerBtn" aria-label="Close Menu">✕</button>
+    <!-- 📋 側邊抽屜目錄 -->
+    <div class="drawer-overlay" id="drawerOverlay">
+        <div class="content-drawer">
+            <button class="drawer-close" id="closeDrawerBtn" aria-label="Close Menu">✕</button>
 
-        <div class="drawer-menu-container">
-            <!-- 📱 手機與平板專用：頂部快捷主導覽 (電腦版隱藏) -->
-            <div class="drawer-main-pages">
-                <a href="index.html" class="drawer-menu-link active">  <!-- ✨ 改成在 HOME 加上 active -->
-    <span class="slash">／</span>
-    <span class="link-text">HOME</span>
-</a>
-<a href="storymap.html" class="drawer-menu-link">
-    <span class="slash">／</span>
-    <span class="link-text">STORY MAP</span>
-</a>
-<a href="About_us.html" class="drawer-menu-link">
-    <span class="slash">／</span>
-    <span class="link-text">ABOUT US</span>
-</a>
-            </div>
-
-            <!-- 分隔微光線 -->
-            <div class="drawer-divider"></div>
-
-            <!-- 📖 篇章章節架構目錄 -->
-            <div class="drawer-header">
-                <h2>全 篇 章 架 構</h2>
-                <p>CONTENT DIRECTORY</p>
-            </div>
-
-            <div class="drawer-chapters-group">
-                <!-- Chapter 0 -->
-                <div class="drawer-chapter-block">
-                    <div class="drawer-chapter-title" style="cursor: default;">
+            <div class="drawer-menu-container">
+                <div class="drawer-main-pages">
+                    <a href="index.html" class="drawer-menu-link active">
                         <span class="slash">／</span>
-                        <span>Chapter 0 · 港邊記憶</span>
-                    </div>
+                        <span class="link-text">HOME</span>
+                    </a>
+                    <a href="storymap.html" class="drawer-menu-link">
+                        <span class="slash">／</span>
+                        <span class="link-text">STORY MAP</span>
+                    </a>
+                    <a href="About_us.html" class="drawer-menu-link">
+                        <span class="slash">／</span>
+                        <span class="link-text">ABOUT US</span>
+                    </a>
                 </div>
 
-                <!-- Chapter 1 -->
-                <div class="drawer-chapter-block">
-                    <a href="fisherman.html" class="drawer-chapter-title">
-                        <span class="slash">／</span>
-                        <span>Chapter 1 · 漁民篇</span>
-                    </a>
-                    <div class="drawer-sub-items">
-                        <span class="sub-item">· 1-1 浪沫與歲月之間：老船長</span>
-                        <span class="sub-item">· 1-2 網住細碎的風浪：吻仔魚</span>
-                        <span class="sub-item">· 1-3 來自異鄉的討海人：漁工</span>
-                    </div>
+                <div class="drawer-divider"></div>
+
+                <div class="drawer-header">
+                    <h2>全 篇 章 架 構</h2>
+                    <p>CONTENT DIRECTORY</p>
                 </div>
 
-                <!-- Chapter 2 -->
-                <div class="drawer-chapter-block">
-                    <a href="worker.html" class="drawer-chapter-title">
-                        <span class="slash">／</span>
-                        <span>Chapter 2 · 職人篇</span>
-                    </a>
-                    <div class="drawer-sub-items">
-                        <span class="sub-item">· 2-1 留下來的不只是機器：三鋼鐵</span>
-                        <span class="sub-item">· 2-2 船靠岸之後：全福造船廠</span>
-                        <span class="sub-item">· 2-3 一艘船的誕生：蘇澳港職人</span>
+                <div class="drawer-chapters-group">
+                    <div class="drawer-chapter-block">
+                        <div class="drawer-chapter-title" style="cursor: default;">
+                            <span class="slash">／</span>
+                            <span>Chapter 0 · 港邊記憶</span>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Chapter 3 -->
-                <div class="drawer-chapter-block">
-                    <a href="food.html" class="drawer-chapter-title">
-                        <span class="slash">／</span>
-                        <span>Chapter 3 · 食物篇</span>
-                    </a>
-                    <div class="drawer-sub-items">
-                        <span class="sub-item">· 3-1 南方澳的新討海運動：雷震洲海派生活</span>
-                        <span class="sub-item">· 3-2 鯖魚的重生之路：大鯖魚夢工廠</span>
-                        <span class="sub-item">· 3-3 魚市場：第一手鮮味</span>
+                    <div class="drawer-chapter-block">
+                        <a href="fisherman.html" class="drawer-chapter-title">
+                            <span class="slash">／</span>
+                            <span>Chapter 1 · 漁民篇</span>
+                        </a>
+                        <div class="drawer-sub-items">
+                            <span class="sub-item">· 1-1 浪沫與歲月之間：老船長</span>
+                            <span class="sub-item">· 1-2 網住細碎的風浪：李重道</span>
+                            <span class="sub-item">· 1-3 來自異鄉的討海人：漁工</span>
+                        </div>
+                    </div>
+
+                    <div class="drawer-chapter-block">
+                        <a href="worker.html" class="drawer-chapter-title">
+                            <span class="slash">／</span>
+                            <span>Chapter 2 · 職人篇</span>
+                        </a>
+                        <div class="drawer-sub-items">
+                            <span class="sub-item">· 2-1 留下來的不只是機器：三鋼鐵</span>
+                            <span class="sub-item">· 2-2 船靠岸之後：全福造船廠</span>
+                            <span class="sub-item">· 2-3 一艘船的誕生：蘇澳港職人</span>
+                        </div>
+                    </div>
+
+                    <div class="drawer-chapter-block">
+                        <a href="food.html" class="drawer-chapter-title">
+                            <span class="slash">／</span>
+                            <span>Chapter 3 · 食物篇</span>
+                        </a>
+                        <div class="drawer-sub-items">
+                            <span class="sub-item">· 3-1 南方澳的新討海運動：雷震洲海派生活</span>
+                            <span class="sub-item">· 3-2 鯖魚的重生之路：大鯖魚夢工廠</span>
+                            <span class="sub-item">· 3-3 魚市場：第一手鮮味</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
     <!-- 頁尾 -->
     <footer class="site-footer" id="siteFooter">
@@ -1501,63 +1562,55 @@
 
     <script>
         // ==========================================
-// 🎬 開場動畫控制（播放完自動淡出 + 支援跳過）
-// ==========================================
-document.addEventListener("DOMContentLoaded", () => {
-    const splashScreen = document.getElementById('splashScreen');
-    const splashVideo = document.getElementById('splashVideo');
-    const skipSplashBtn = document.getElementById('skipSplashBtn');
-    const splashBar = document.getElementById('splashBar');
+        // 🎬 開場動畫控制（sessionStorage 記憶）
+        // ==========================================
+        document.addEventListener("DOMContentLoaded", () => {
+            const splashScreen = document.getElementById('splashScreen');
+            const splashVideo = document.getElementById('splashVideo');
+            const skipSplashBtn = document.getElementById('skipSplashBtn');
+            const splashBar = document.getElementById('splashBar');
 
-    if (!splashScreen) return;
+            if (!splashScreen) return;
 
-    // ✨ 核心重點：檢查這次瀏覽是否已經看過開場動畫
-    if (sessionStorage.getItem('hasSeenSplash')) {
-        // 如果已經看過，直接隱藏開場動畫，不播放
-        splashScreen.style.display = 'none';
-        return; 
-    }
+            if (sessionStorage.getItem('hasSeenSplash')) {
+                splashScreen.style.display = 'none';
+                return; 
+            }
 
-    // 關閉並記錄狀態的函式
-    function closeSplash() {
-        if (splashScreen.classList.contains('fade-out')) return;
-        
-        // 標記「已經看過開場」，下次點回 Home 就不會再跳出
-        sessionStorage.setItem('hasSeenSplash', 'true');
-        
-        splashScreen.classList.add('fade-out');
-        setTimeout(() => {
-            splashScreen.style.display = 'none';
-        }, 850);
-    }
+            function closeSplash() {
+                if (splashScreen.classList.contains('fade-out')) return;
+                
+                sessionStorage.setItem('hasSeenSplash', 'true');
+                splashScreen.classList.add('fade-out');
+                setTimeout(() => {
+                    splashScreen.style.display = 'none';
+                }, 850);
+            }
 
-    // 1. 監聽影片進度與播放結束
-    if (splashVideo) {
-        splashVideo.addEventListener('timeupdate', () => {
-            if (splashVideo.duration && splashBar) {
-                const percent = (splashVideo.currentTime / splashVideo.duration) * 100;
-                splashBar.style.width = percent + '%';
+            if (splashVideo) {
+                splashVideo.addEventListener('timeupdate', () => {
+                    if (splashVideo.duration && splashBar) {
+                        const percent = (splashVideo.currentTime / splashVideo.duration) * 100;
+                        splashBar.style.width = percent + '%';
+                    }
+                });
+
+                splashVideo.addEventListener('ended', closeSplash);
+                setTimeout(closeSplash, 5000);
+
+                splashVideo.play().catch(() => {
+                    setTimeout(closeSplash, 1800);
+                });
+            }
+
+            if (skipSplashBtn) {
+                skipSplashBtn.addEventListener('click', closeSplash);
             }
         });
 
-        // 影片播放完畢時淡出並記錄
-        splashVideo.addEventListener('ended', closeSplash);
-
-        // 超時安全保護：最長不超過 5 秒自動進首頁
-        setTimeout(closeSplash, 5000);
-
-        // 嘗試自動播放
-        splashVideo.play().catch(() => {
-            // 若被瀏覽器省電或安全原則阻擋自動播放，1.8秒後直接淡出進首頁
-            setTimeout(closeSplash, 1800);
-        });
-    }
-
-    // 2. 點擊右上角跳過按鈕
-    if (skipSplashBtn) {
-        skipSplashBtn.addEventListener('click', closeSplash);
-    }
-});
+        // ==========================================
+        // 🗺️ 地圖與大卡片互動控制
+        // ==========================================
         document.addEventListener('DOMContentLoaded', () => {
             
             const chapterData = [
@@ -1577,7 +1630,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     mainLink: "fisherman.html",
                     subSections: [
                         { id: "1-1", title: "浪沫與歲月之間：一位南方澳老船長的遠洋討海人生" },
-                        { id: "1-2", title: "網住細碎的風浪：李阿濤在南方澳與吻仔魚共生的一輩子" },
+                        { id: "1-2", title: "網住細碎的風浪：李重道在南方澳與吻仔魚共生的一輩子" },
                         { id: "1-3", title: "來自異鄉的南方澳討海人:外籍漁工街訪" }
                     ]
                 },
@@ -1735,7 +1788,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
 
-            // 3. 篇章節點點擊與大卡片
+            // ==========================================
+            // 3. 篇章節點點擊與大卡片輪播（支援左右按鈕 + 左右滑動）
+            // ==========================================
             const detailModal = document.getElementById('detailModal');
             const sheetCloseBtn = document.getElementById('sheetCloseBtn');
             const modalTag = document.getElementById('modalTag');
@@ -1744,12 +1799,15 @@ document.addEventListener("DOMContentLoaded", () => {
             const subchaptersWrapper = document.getElementById('subchaptersWrapper');
             const modalSubList = document.getElementById('modalSubList');
             const modalChapterLink = document.getElementById('modalChapterLink');
+            const modalPhotoSlider = document.getElementById('modalPhotoSlider');
+            const sliderPrevBtn = document.getElementById('sliderPrevBtn');
+            const sliderNextBtn = document.getElementById('sliderNextBtn');
 
             let autoSliderTimer = null;
             let currentSlideIndex = 0;
 
             function goToSlide(index) {
-                currentSlideIndex = index;
+                currentSlideIndex = (index + 3) % 3;
                 for (let i = 0; i < 3; i++) {
                     const imgEl = document.getElementById(`slideImg${i}`);
                     const dotEl = document.getElementById(`sliderDot${i}`);
@@ -1758,19 +1816,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
+            function resetAutoTimer() {
+                if (autoSliderTimer) clearInterval(autoSliderTimer);
+                autoSliderTimer = setInterval(() => {
+                    goToSlide(currentSlideIndex + 1);
+                }, 3500);
+            }
+
             function startAutoSlider(images) {
                 for (let i = 0; i < 3; i++) {
                     const imgEl = document.getElementById(`slideImg${i}`);
                     imgEl.src = images[i] || images[0];
                 }
                 goToSlide(0);
-
-                if (autoSliderTimer) clearInterval(autoSliderTimer);
-
-                autoSliderTimer = setInterval(() => {
-                    const nextIndex = (currentSlideIndex + 1) % 3;
-                    goToSlide(nextIndex);
-                }, 3500);
+                resetAutoTimer();
             }
 
             function stopAutoSlider() {
@@ -1780,23 +1839,79 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
-            // ✨ 支援點擊指示點切換輪播圖
+            // 點擊下方小圓點切換
             document.querySelectorAll('.slider-dot').forEach(dot => {
                 dot.addEventListener('click', (e) => {
                     e.stopPropagation();
                     const index = parseInt(dot.getAttribute('data-index'));
                     goToSlide(index);
-                    // 重新計時，避免剛點完就被自動跳過
-                    if (autoSliderTimer) {
-                        clearInterval(autoSliderTimer);
-                        autoSliderTimer = setInterval(() => {
-                            const nextIndex = (currentSlideIndex + 1) % 3;
-                            goToSlide(nextIndex);
-                        }, 3500);
-                    }
+                    resetAutoTimer();
                 });
             });
 
+            // ✨ 電腦版左右箭頭切換按鈕事件
+            if (sliderPrevBtn) {
+                sliderPrevBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    goToSlide(currentSlideIndex - 1);
+                    resetAutoTimer();
+                });
+            }
+
+            if (sliderNextBtn) {
+                sliderNextBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    goToSlide(currentSlideIndex + 1);
+                    resetAutoTimer();
+                });
+            }
+
+            // 手機 Touch 左右滑動 + 電腦滑鼠拖曳左右滑動
+            let sliderStartX = 0;
+            let sliderStartY = 0;
+            let isDraggingSlider = false;
+
+            modalPhotoSlider.addEventListener('touchstart', (e) => {
+                sliderStartX = e.touches[0].clientX;
+                sliderStartY = e.touches[0].clientY;
+            }, { passive: true });
+
+            modalPhotoSlider.addEventListener('touchend', (e) => {
+                const diffX = e.changedTouches[0].clientX - sliderStartX;
+                const diffY = e.changedTouches[0].clientY - sliderStartY;
+
+                if (Math.abs(diffX) > 35 && Math.abs(diffX) > Math.abs(diffY)) {
+                    if (diffX < 0) {
+                        goToSlide(currentSlideIndex + 1);
+                    } else {
+                        goToSlide(currentSlideIndex - 1);
+                    }
+                    resetAutoTimer();
+                }
+            }, { passive: true });
+
+            modalPhotoSlider.addEventListener('mousedown', (e) => {
+                // 如果點選的是箭頭按鈕或圓點，不觸發拖曳
+                if (e.target.closest('.slider-nav-btn') || e.target.closest('.slider-dot')) return;
+                isDraggingSlider = true;
+                sliderStartX = e.clientX;
+            });
+
+            window.addEventListener('mouseup', (e) => {
+                if (!isDraggingSlider) return;
+                isDraggingSlider = false;
+                const diffX = e.clientX - sliderStartX;
+                if (Math.abs(diffX) > 40) {
+                    if (diffX < 0) {
+                        goToSlide(currentSlideIndex + 1);
+                    } else {
+                        goToSlide(currentSlideIndex - 1);
+                    }
+                    resetAutoTimer();
+                }
+            });
+
+            // 點擊節點開啟卡片
             document.querySelectorAll('.spot-node').forEach(spot => {
                 spot.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -1829,11 +1944,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     startAutoSlider(data.images);
                     detailModal.classList.add('open');
+                    document.body.classList.add('modal-open');
                 });
             });
 
+            // 關閉卡片
             function closeModal() {
                 detailModal.classList.remove('open');
+                document.body.classList.remove('modal-open');
                 stopAutoSlider();
             }
 
