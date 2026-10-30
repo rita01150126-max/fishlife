@@ -68,6 +68,7 @@
             align-items: center;
             text-decoration: none;
             height: 100%;
+            cursor: pointer;
         }
 
         .brand-logo-img {
@@ -100,6 +101,7 @@
             padding: 8px 16px;
             border-radius: 20px;
             transition: all 0.25s ease;
+            cursor: pointer;
         }
 
         .nav-item-link:hover, .nav-item-link.active {
@@ -299,6 +301,7 @@
             padding: 12px 30px;
             border-radius: 30px;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .back-to-stories-btn:hover {
@@ -387,6 +390,7 @@
             text-decoration: none;
             color: rgba(255, 255, 255, 0.9);
             transition: transform 0.25s ease, color 0.25s ease;
+            cursor: pointer;
         }
 
         .drawer-menu-link .slash {
@@ -506,6 +510,7 @@
             color: #ffffff;
             text-decoration: none;
             transition: all 0.25s;
+            cursor: pointer;
         }
 
         .footer-social-btn svg {
@@ -629,9 +634,9 @@
 </head>
 <body>
 
-    <!-- 🌊 頂部導覽列 (點擊 Logo 返回首頁) -->
+    <!-- 🌊 頂部導覽列 (點擊 Logo 滾動至頂部) -->
     <nav class="top-notice-bar">
-        <a href="index.html" class="notice-brand-logo" id="navBrandLogo" title="返回首頁">
+        <a href="#heroCover" class="notice-brand-logo" id="navBrandLogo" title="回到頂部">
             <img src="image/Logo.png" alt="漁生" class="brand-logo-img">
         </a>
         <div class="top-nav-links">
@@ -745,7 +750,7 @@
         </div>
     </footer>
 
-    <!-- JavaScript：Footer 滾動升起、抽屜開關與回頂端 -->
+    <!-- JavaScript：Footer 滾動升起、抽屜開關、回頂端與「敬請期待」提示 -->
     <script>
         const siteFooter = document.getElementById('siteFooter');
         const backToTopBtn = document.getElementById('backToTopBtn');
@@ -761,20 +766,6 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
-
-        // 桌機版 Footer 滾動升起
-        window.addEventListener('scroll', () => {
-            if (window.innerWidth > 1024) {
-                const scrollPosition = window.innerHeight + window.pageYOffset;
-                const threshold = document.documentElement.scrollHeight - 80;
-
-                if (scrollPosition >= threshold) {
-                    siteFooter.classList.add('show');
-                } else {
-                    siteFooter.classList.remove('show');
-                }
-            }
-        }, { passive: true });
 
         // 回到頂端按鈕
         if (backToTopBtn) {
@@ -795,6 +786,35 @@
                 if (e.target === drawerOverlay) drawerOverlay.classList.remove('open');
             });
         }
+
+        // 桌機版 Footer 滾動升起
+        window.addEventListener('scroll', () => {
+            if (window.innerWidth > 1024) {
+                const scrollPosition = window.innerHeight + window.pageYOffset;
+                const threshold = document.documentElement.scrollHeight - 80;
+
+                if (scrollPosition >= threshold) {
+                    siteFooter.classList.add('show');
+                } else {
+                    siteFooter.classList.remove('show');
+                }
+            }
+        }, { passive: true });
+
+        // 綁定所有點擊跳轉處，提示「敬請期待！」（若抽屜處於開啟狀態則自動關閉）
+        const alertTargets = document.querySelectorAll(
+            '.nav-item-link, .drawer-menu-link, .back-to-stories-btn, .footer-social-btn'
+        );
+
+        alertTargets.forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (drawerOverlay && drawerOverlay.classList.contains('open')) {
+                    drawerOverlay.classList.remove('open');
+                }
+                alert('敬請期待！');
+            });
+        });
     </script>
 </body>
 </html>
