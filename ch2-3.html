@@ -300,6 +300,46 @@
             transform: translateX(-4px);
         }
 
+        /* 🎥 嵌入影片專屬卡片 */
+        .featured-video-card {
+            margin: 55px auto 40px auto;
+            max-width: 86%;
+            background: #ffffff;
+            border-radius: 14px;
+            border: 1px solid var(--border-soft);
+            overflow: hidden;
+            box-shadow: 0 12px 35px rgba(19, 59, 92, 0.08);
+        }
+
+        .video-embed-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 比例 */
+            height: 0;
+            background-color: #000000;
+        }
+
+        .video-embed-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .video-card-caption {
+            padding: 14px 20px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            background: #ffffff;
+            border-top: 1px solid #edf2f7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            letter-spacing: 0.03em;
+        }
+
         /* ===================================================
            📋 4. 側邊抽屜（純淨版：僅主選單，無目錄）
            =================================================== */
@@ -408,6 +448,7 @@
                 transform: scale(1.15);
             }
         }
+
 
         /* ===================================================
            ⚓ 5. 頁尾 Footer (統一標準規格)
@@ -656,7 +697,7 @@
         
         <!-- 📷 照片 1：龍德造船五廠廠外圖 -->
         <figure class="article-image-figure" style="margin-top: 0;">
-            <img src="image/ch2-3-1.JPG" onerror="this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80'" alt="龍德造船五廠廠外圖">
+            <img src="image/ch2-3-1.jpg" onerror="this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80'" alt="龍德造船五廠廠外圖">
             <figcaption class="article-image-caption">
                 <span>龍德造船五廠廠外圖</span>
                 <span class="caption-photographer">（攝影／漁生團隊）</span>
@@ -800,6 +841,16 @@
         <p class="article-p">
             從設計圖、焊道、檢驗到海試，陳奕霖與龍德造船的日常，默默支撐著蘇澳港的運作。而港口之所以能持續運行，不只是因為船會進出，更因為始終有一群人在岸上辛勤的工作，在一次次的測試、焊接與監造之間，把一艘船建造完成。
         </p>
+         <!-- 🎥 嵌入影片專屬方框 -->
+        <div class="featured-video-card">
+            <div class="video-embed-wrapper">
+               <iframe width="560" height="315" src="https://www.youtube.com/embed/h-IOUVIbpSc?si=eoG-AAO22hK19Iqa" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <div class="video-card-caption">
+                <span>龍德造船廠訪談影音</span>
+                <span class="caption-photographer">（影音製作／漁生團隊）</span>
+            </div>
+        </div>
 
         <!-- 返回專題目錄 -->
         <a href="worker.html" class="back-to-stories-btn">
