@@ -186,7 +186,7 @@
             align-items: center;
         }
 
-        /* 工具列：全螢幕按鈕靠右 */
+        /* 工具列：全螢幕按鈕（僅電腦版顯示） */
         .flipbook-toolbar {
             width: 100%;
             max-width: 960px;
@@ -232,7 +232,7 @@
             perspective: 2000px;
         }
 
-        /* 書本展開框; */
+        /* 書本展開框 */
         .book-spread-box {
             position: relative;
             background: #4f5b6d;
@@ -587,7 +587,7 @@
         }
 
         /* ===================================================
-           📱 6. 響應式調整 (≤ 1024px)：強制切為單頁
+           📱 6. 響應式調整 (≤ 1024px)：強制切為單頁、隱藏全螢幕閱讀
            =================================================== */
         @media (max-width: 1024px) {
             .top-notice-bar {
@@ -609,17 +609,19 @@
             }
 
             .gallery-header-section {
-                padding: 100px 20px 15px;
+                padding: 100px 20px 18px;
             }
 
-            .flipbook-toolbar {
-                justify-content: center;
-                margin-bottom: 12px;
+            /* 📱 手機與平板隱藏「全螢幕閱讀」工具列與按鈕 */
+            .flipbook-toolbar,
+            #fullscreenBtn {
+                display: none !important;
             }
 
             .book-spread-box {
                 padding: 10px;
                 gap: 0;
+                min-height: auto;
             }
 
             .nav-flip-btn {
@@ -679,7 +681,7 @@
     <!-- 📚 電子攝影書主體 -->
     <main class="flipbook-main-section">
 
-        <!-- 頂部控制列：保留全螢幕按鈕 -->
+        <!-- 頂部控制列：僅電腦版顯示全螢幕閱讀按鈕 -->
         <div class="flipbook-toolbar">
             <button class="tool-btn" id="fullscreenBtn" title="全螢幕閱讀">
                 <span>全螢幕閱讀</span>
@@ -738,7 +740,7 @@
                         <span class="slash">／</span>
                         <span class="link-text">OUR MEMORIES</span>
                     </a>
-                     <a href="About_us.html" class="drawer-menu-link">
+                    <a href="About_us.html" class="drawer-menu-link">
                         <span class="slash">／</span>
                         <span class="link-text">ABOUT US</span>
                     </a>
@@ -870,7 +872,6 @@
                 pageIndicator.innerText = `${currentPageNum} / ${totalPages}`;
             }
 
-            // 按鈕永遠不反灰，隨時可點選循環
             prevBtn.disabled = false;
             nextBtn.disabled = false;
 
@@ -893,7 +894,6 @@
 
             if (!isMobileView()) {
                 if (currentPageNum <= 1) {
-                    // 電腦版循環到最後一對雙頁（奇數開頭）
                     currentPageNum = totalPages % 2 === 0 ? totalPages - 1 : totalPages;
                 } else {
                     currentPageNum = Math.max(1, currentPageNum - 2);
@@ -953,15 +953,18 @@
             }
         }, { passive: true });
 
-        // 全螢幕閱讀切換
-        fullscreenBtn.addEventListener('click', () => {
-            const stage = document.getElementById('bookStage');
-            if (!document.fullscreenElement) {
-                stage.requestFullscreen().catch(err => alert(`無法進入全螢幕：${err.message}`));
-            } else {
-                document.exitFullscreen();
-            }
-        });
+        // 全螢幕閱讀切換（僅電腦版執行，手機版不觸發）
+        if (fullscreenBtn) {
+            fullscreenBtn.addEventListener('click', () => {
+                if (isMobileView()) return;
+                const stage = document.getElementById('bookStage');
+                if (!document.fullscreenElement) {
+                    stage.requestFullscreen().catch(err => alert(`無法進入全螢幕：${err.message}`));
+                } else {
+                    document.exitFullscreen();
+                }
+            });
+        }
 
         // 視窗尺寸改變時重新適配
         let resizeTimer;
