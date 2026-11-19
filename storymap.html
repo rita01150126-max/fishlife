@@ -32,7 +32,6 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* 滿版垂直空間，保證 Footer 緊貼最底端 */
         html, body {
             width: 100%;
             min-height: 100vh !important;
@@ -180,7 +179,6 @@
             z-index: 10;
         }
 
-        /* 上方標題 */
         .map-top-title-wrapper {
             width: min(88vw, calc((100vh - 250px) * (16 / 9)));
             max-width: 1200px;
@@ -258,11 +256,16 @@
             border-radius: 100px;
             cursor: pointer;
             transform: translate(-50%, -50%);
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, background-color 0.25s ease;
             border: 1.5px solid rgba(19, 59, 92, 0.16);
             box-shadow: 0 6px 18px rgba(19, 59, 92, 0.15);
             z-index: 20;
             user-select: none;
+        }
+
+        /* 觸碰或播放時提高層級，確保照片在最上層 */
+        .node:hover, .node.active {
+            z-index: 80;
         }
 
         .node.active::before {
@@ -337,22 +340,37 @@
             }
         }
 
-        /* 靜態純文字地點標籤（不可點擊） */
+        /* ===================================================
+           📍 純文字地點標籤（無聲音、支援觸碰/點擊彈出照片）
+           =================================================== */
         .static-badge {
             position: absolute;
             display: inline-flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.88);
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            padding: 5px 12px;
+            padding: 5px 13px;
             border-radius: 100px;
-            border: 1px solid rgba(19, 59, 92, 0.14);
-            box-shadow: 0 4px 12px rgba(19, 59, 92, 0.08);
+            border: 1px solid rgba(19, 59, 92, 0.16);
+            box-shadow: 0 4px 12px rgba(19, 59, 92, 0.1);
             transform: translate(-50%, -50%);
             z-index: 15;
-            pointer-events: none;
+            cursor: pointer;
             user-select: none;
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .static-badge:hover, .static-badge.active {
+            z-index: 80;
+            border-color: var(--ocean-blue);
+            box-shadow: 0 8px 20px rgba(19, 59, 92, 0.18);
+        }
+
+        @media (hover: hover) {
+            .static-badge:hover {
+                transform: translate(-50%, -50%) scale(1.06) translateY(-2px);
+            }
         }
 
         .static-badge .label {
@@ -362,6 +380,105 @@
             font-weight: 700;
             white-space: nowrap;
             letter-spacing: 0.04em;
+        }
+
+        /* ===================================================
+           🖼️ 純照片彈出預覽小卡（無文字、加大版、智慧避遮擋）
+           =================================================== */
+        .node-preview-card {
+            position: absolute;
+            bottom: calc(100% + 12px);
+            left: 50%;
+            width: 210px;
+            background: #ffffff;
+            padding: 6px;
+            border-radius: 14px;
+            border: 1.5px solid rgba(19, 59, 92, 0.16);
+            box-shadow: 0 14px 32px rgba(11, 29, 45, 0.24);
+            opacity: 0;
+            visibility: hidden;
+            transform: translate3d(-50%, 6px, 0) scale(0.95);
+            transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.2s;
+            pointer-events: none;
+            will-change: opacity, transform;
+            z-index: 90;
+        }
+
+        /* 底部指示小三角（預設在下方） */
+        .node-preview-card::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 6px;
+            border-style: solid;
+            border-color: #ffffff transparent transparent transparent;
+        }
+
+        /* 靠上方的節點（龍德、豆腐岬、三剛）：改為往下彈出，避免切出地圖頂部 */
+        .node-preview-card.pop-bottom {
+            bottom: auto;
+            top: calc(100% + 12px);
+            transform: translate3d(-50%, -6px, 0) scale(0.95);
+        }
+
+        .node-preview-card.pop-bottom::after {
+            top: auto;
+            bottom: 100%;
+            border-color: transparent transparent #ffffff transparent;
+        }
+
+        /* 靠右方的節點（全福、豆腐岬、內埤）：靠右對齊防切邊 */
+        .node-preview-card.align-right {
+            left: auto;
+            right: -12px;
+            transform: translate3d(0, 6px, 0) scale(0.95);
+        }
+
+        .node-preview-card.align-right.pop-bottom {
+            transform: translate3d(0, -6px, 0) scale(0.95);
+        }
+
+        .node-preview-card.align-right::after {
+            left: auto;
+            right: 28px;
+        }
+
+        .node-preview-card img {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border-radius: 9px;
+            display: block;
+            background-color: #e6f0f5;
+        }
+
+        /* 滑鼠移過去顯示（支援聲音節點與純地點標籤） */
+        @media (hover: hover) {
+            .node:hover .node-preview-card,
+            .static-badge:hover .node-preview-card {
+                opacity: 1;
+                visibility: visible;
+                transform: translate3d(-50%, 0, 0) scale(1);
+            }
+            .node:hover .node-preview-card.align-right,
+            .static-badge:hover .node-preview-card.align-right {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+        }
+
+        /* 播放聲音或手機點擊時同步顯示 */
+        .node.active .node-preview-card,
+        .static-badge.active .node-preview-card {
+            opacity: 1;
+            visibility: visible;
+            transform: translate3d(-50%, 0, 0) scale(1);
+            border-color: var(--accent-gold);
+        }
+        .node.active .node-preview-card.align-right,
+        .static-badge.active .node-preview-card.align-right {
+            transform: translate3d(0, 0, 0) scale(1);
         }
 
         .map-scroll-hint {
@@ -443,7 +560,7 @@
             }
         }
 
-        .drawer-menu-container {
+        .drawer-main-pages {
             margin-top: 36px;
             display: flex;
             flex-direction: column;
@@ -555,7 +672,7 @@
         .footer-social-btn svg { width: 17px; height: 17px; fill: currentColor; }
 
         /* ===================================================
-           📱 5. 手機與平板專屬微調 (解決左側滑不到底)
+           📱 5. 手機與平板專屬微調
            =================================================== */
         @media (max-width: 1024px) {
             .top-notice-bar {
@@ -575,13 +692,12 @@
                 display: flex;
             }
 
-            /* 移除父容器左右 padding，改由子元素各自維持 margin 緩衝 */
             .map-section {
                 padding: 85px 0 20px 0 !important;
                 display: flex !important;
                 flex-direction: column !important;
                 justify-content: flex-start !important;
-                align-items: flex-start !important; /* 絕對靠左，解開左側鎖定 */
+                align-items: flex-start !important;
                 overflow-x: auto !important;
                 overflow-y: hidden !important;
                 -webkit-overflow-scrolling: touch;
@@ -604,7 +720,7 @@
                 width: 900px !important;
                 height: auto !important;
                 aspect-ratio: 16 / 9;
-                margin: 0 16px !important; /* 左右各 16px 邊界，最左與最右皆可完整瀏覽 */
+                margin: 0 16px !important;
                 padding: 8px;
                 border-radius: 24px;
                 flex-shrink: 0 !important;
@@ -632,6 +748,11 @@
 
             .static-badge {
                 padding: 4px 9px;
+            }
+
+            .node-preview-card {
+                width: 165px;
+                padding: 5px;
             }
 
             .map-scroll-hint {
@@ -687,55 +808,82 @@
                 <!-- 地圖底圖 -->
                 <img src="image/map.jpeg" class="map-img" alt="南方澳聲音故事地圖">
 
-                <!-- ========== 🔊 具有聲音播放功能的節點 ========== -->
-                <!-- 1. 三剛鐵工廠文物館 -->
+                <!-- ========== 🔊 具有聲音播放與純照片預覽的節點 ========== -->
+                <!-- 1. 三剛鐵工廠文物館 (靠上方，往下彈出) -->
                 <div class="node" style="top: 26%; left: 59%;" data-sound="steel">
+                    <div class="node-preview-card pop-bottom">
+                        <img src="image/ch2-1.jpg" alt="" loading="lazy">
+                    </div>
                     <div class="ctrl-btn"><div class="play-icon"></div><div class="pause-icon"></div></div>
-                    <span class="label">三剛鐵工廠</span>
+                    <span class="label">三鋼鐵工廠文物館</span>
                 </div>
 
-                <!-- 2. 全福造船廠 -->
+                <!-- 2. 全福造船廠 (靠右邊緣，靠右對齊) -->
                 <div class="node" style="top: 57%; left: 83%;" data-sound="shipyard">
+                    <div class="node-preview-card align-right">
+                        <img src="image/ch2-2-1.jpg" alt="" loading="lazy">
+                    </div>
                     <div class="ctrl-btn"><div class="play-icon"></div><div class="pause-icon"></div></div>
                     <span class="label">全福造船廠</span>
                 </div>
 
                 <!-- 3. 南方澳第一拍賣魚市場 -->
                 <div class="node" style="top: 64%; left: 53%;" data-sound="fish-market">
+                    <div class="node-preview-card">
+                        <img src="image/market.JPG" alt="" loading="lazy">
+                    </div>
                     <div class="ctrl-btn"><div class="play-icon"></div><div class="pause-icon"></div></div>
                     <span class="label">第一拍賣魚市場</span>
                 </div>
 
                 <!-- 4. 海派生活 -->
                 <div class="node" style="top: 77%; left: 66%;" data-sound="haipai">
+                    <div class="node-preview-card">
+                        <img src="image/Ch3-1-2.JPG" alt="" loading="lazy">
+                    </div>
                     <div class="ctrl-btn"><div class="play-icon"></div><div class="pause-icon"></div></div>
                     <span class="label">海派生活</span>
                 </div>
 
-                <!-- 5. 內埤海灘 -->
+                <!-- 5. 內埤海灘 (靠右邊緣，靠右對齊) -->
                 <div class="node" style="top: 91%; left: 77%;" data-sound="neipi-beach">
+                    <div class="node-preview-card align-right">
+                        <img src="image/ch0_1.JPG" alt="" loading="lazy">
+                    </div>
                     <div class="ctrl-btn"><div class="play-icon"></div><div class="pause-icon"></div></div>
                     <span class="label">內埤海灘</span>
                 </div>
 
-                <!-- ========== 📍 純文字地點標籤（無聲音按鈕、不可點擊） ========== -->
-                <!-- 龍德造船廠 -->
+                <!-- ========== 📍 純文字地點標籤（無聲音，同樣支援純照片彈出） ========== -->
+                <!-- 龍德造船 (靠上緣，往下彈出) -->
                 <div class="static-badge" style="top: 8%; left: 51%;">
+                    <div class="node-preview-card pop-bottom">
+                        <img src="image/ch2-3-1.JPG" alt="" loading="lazy">
+                    </div>
                     <span class="label">龍德造船</span>
                 </div>
 
-                <!-- 豆腐岬 -->
+                <!-- 豆腐岬 (靠上緣且靠右，往下且靠右對齊) -->
                 <div class="static-badge" style="top: 21%; left: 78%;">
+                    <div class="node-preview-card pop-bottom align-right">
+                        <img src="image/IMG_8412 2.JPG" alt="" loading="lazy">
+                    </div>
                     <span class="label">豆腐岬</span>
                 </div>
 
                 <!-- 蘇澳港旅客服務中心 -->
                 <div class="static-badge" style="top: 41%; left: 37%;">
+                    <div class="node-preview-card">
+                        <img src="image/center.jpeg" alt="" loading="lazy">
+                    </div>
                     <span class="label">旅客服務中心</span>
                 </div>
 
                 <!-- 南方澳漁港 -->
                 <div class="static-badge" style="top: 48%; left: 52%;">
+                    <div class="node-preview-card">
+                        <img src="image/nanfangao.JPG" alt="" loading="lazy">
+                    </div>
                     <span class="label">南方澳漁港</span>
                 </div>
 
@@ -754,23 +902,23 @@
             <button class="drawer-close" id="closeDrawerBtn" aria-label="Close Menu">✕</button>
 
             <div class="drawer-main-pages">
-                    <a href="index.html" class="drawer-menu-link">
-                        <span class="slash">／</span>
-                        <span class="link-text">HOME</span>
-                    </a>
-                    <a href="storymap.html" class="drawer-menu-link active">
-                        <span class="slash">／</span>
-                        <span class="link-text">SOUND MAP</span>
-                    </a>
-                    <a href="photo.html" class="drawer-menu-link">
-                        <span class="slash">／</span>
-                        <span class="link-text">OUR MEMORIES</span>
-                    </a>
-                     <a href="About_us.html" class="drawer-menu-link">
-                        <span class="slash">／</span>
-                        <span class="link-text">ABOUT US</span>
-                    </a>
-                </div>
+                <a href="index.html" class="drawer-menu-link">
+                    <span class="slash">／</span>
+                    <span class="link-text">HOME</span>
+                </a>
+                <a href="storymap.html" class="drawer-menu-link active">
+                    <span class="slash">／</span>
+                    <span class="link-text">SOUND MAP</span>
+                </a>
+                <a href="photo.html" class="drawer-menu-link">
+                    <span class="slash">／</span>
+                    <span class="link-text">OUR MEMORIES</span>
+                </a>
+                <a href="About_us.html" class="drawer-menu-link">
+                    <span class="slash">／</span>
+                    <span class="link-text">ABOUT US</span>
+                </a>
+            </div>
         </div>
     </div>
 
@@ -845,7 +993,7 @@
             });
         }
 
-        // 4. 手機端預設貼齊最左側，解除左邊滑不到底的限制
+        // 4. 手機端預設貼齊最左側
         window.addEventListener('DOMContentLoaded', () => {
             const mapArea = document.getElementById('mapScrollArea');
             if (window.innerWidth <= 1024 && mapArea) {
@@ -853,7 +1001,7 @@
             }
         });
 
-        // 5. 聲音播放完畢時，自動切回原本的播放圖示按鈕
+        // 5. 聲音播放控制與純地點點擊預覽
         let currentAudio = null;
         let currentBtn = null;
 
@@ -868,8 +1016,12 @@
             currentBtn = null;
         }
 
+        // 聲音節點點擊播放
         document.querySelectorAll('.node').forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                document.querySelectorAll('.static-badge').forEach(b => b.classList.remove('active'));
+
                 const soundId = this.getAttribute('data-sound');
                 const targetAudio = document.getElementById('audio-' + soundId);
 
@@ -905,6 +1057,23 @@
                     resetCurrentBtn();
                 });
             });
+        });
+
+        // 手機/平板點擊純地點標籤時切換照片預覽
+        document.querySelectorAll('.static-badge').forEach(badge => {
+            badge.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const isActive = this.classList.contains('active');
+                document.querySelectorAll('.static-badge').forEach(b => b.classList.remove('active'));
+                if (!isActive) {
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // 點擊地圖空白處關閉純地點標籤的照片預覽
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.static-badge').forEach(b => b.classList.remove('active'));
         });
     </script>
 </body>
